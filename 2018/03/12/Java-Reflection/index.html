@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Java 反射机制反射机制在正常情况下，如果要使用一个类，必须要经过以下几个步骤：  使用important导入类所在的包（类：java.lang.Class） 通过关键字new进行类对象实例化（构造方法: java.lang.reflect.Constructor） 产生对象可以使用“对象.属性”进行类中属性的调用(属性：java.lang.reflect.Field) 通过“对象.方法()”调">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 反射机制">
+<meta property="og:url" content="http://yoursite.com/2018/03/12/Java-Reflection/index.html">
+<meta property="og:site_name" content="Bloooog">
+<meta property="og:description" content="Java 反射机制反射机制在正常情况下，如果要使用一个类，必须要经过以下几个步骤：  使用important导入类所在的包（类：java.lang.Class） 通过关键字new进行类对象实例化（构造方法: java.lang.reflect.Constructor） 产生对象可以使用“对象.属性”进行类中属性的调用(属性：java.lang.reflect.Field) 通过“对象.方法()”调">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/03/12/Java-Reflection/1520841800260.png">
+<meta property="og:image" content="http://yoursite.com/2018/03/12/Java-Reflection/1520843015901.png">
+<meta property="og:updated_time" content="2018-03-12T08:34:59.959Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java 反射机制">
+<meta name="twitter:description" content="Java 反射机制反射机制在正常情况下，如果要使用一个类，必须要经过以下几个步骤：  使用important导入类所在的包（类：java.lang.Class） 通过关键字new进行类对象实例化（构造方法: java.lang.reflect.Constructor） 产生对象可以使用“对象.属性”进行类中属性的调用(属性：java.lang.reflect.Field) 通过“对象.方法()”调">
+<meta name="twitter:image" content="http://yoursite.com/2018/03/12/Java-Reflection/1520841800260.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/12/Java-Reflection/"/>
+
+
+
+
+
+  <title>Java 反射机制 | Bloooog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Bloooog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Keep Calm and Write it Down</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/Java-Reflection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jun ZHANG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bloooog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java 反射机制</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-12T15:20:01+08:00">
+                2018-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Java-反射机制"><a href="#Java-反射机制" class="headerlink" title="Java 反射机制"></a>Java 反射机制</h1><h2 id="反射机制"><a href="#反射机制" class="headerlink" title="反射机制"></a>反射机制</h2><p>在正常情况下，如果要使用一个类，必须要经过以下几个步骤：</p>
+<ol>
+<li>使用important导入类所在的包（类：<strong>java.lang.Class</strong>）</li>
+<li>通过关键字new进行类对象实例化（构造方法: <strong>java.lang.reflect.Constructor</strong>）</li>
+<li>产生对象可以使用“对象.属性”进行类中属性的调用(属性：<strong>java.lang.reflect.Field</strong>)</li>
+<li>通过“对象.方法()”调用类中的方法（方法：<strong>java.lang.reflect.Method</strong>）</li>
+</ol>
+<p>括号中对应的即是反射一个类时设计的操作。<br>在反射中，使用一个类并不需要导入类的所在包，只要知道类的完整路径就可以知道该类中的所有信息。例如:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class c = Class.forname(<span class="string">"java.lang.String"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>反射不需要有明确的类型对象，所有的对象都使用Object表示。可以直接用Object的与反射机制的混合调用类中的方法。</p>
+<h2 id="类的概念"><a href="#类的概念" class="headerlink" title="类的概念"></a>类的概念</h2><h3 id="获取需要使用的类"><a href="#获取需要使用的类" class="headerlink" title="获取需要使用的类"></a>获取需要使用的类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Class</span>&lt;<span class="title">T</span>&gt; <span class="keyword">implements</span> <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span>,</span></span><br><span class="line"><span class="class">                              <span class="title">GenericDeclaration</span>,</span></span><br><span class="line"><span class="class">                              <span class="title">Type</span>,</span></span><br><span class="line"><span class="class">                              <span class="title">AnnotatedElement</span></span></span><br></pre></td></tr></table></figure>
+<p>Class类的实例表示正在运行的Java应用程序中的类和接口。<br>如果要想使用Class类进行操作，就必须首先产生Class类这个对象，一共有三种方法：</p>
+<ol>
+<li><p>Object类中提供了一个返回Class类的方法，定义如下：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">native</span> Class&lt;?&gt; getClass();</span><br></pre></td></tr></table></figure>
+<p> 使用时：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class c = String.getClass;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>利于“类.class”获得， 例如：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class c = java.lang.String.class</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>利用Class的Static方法取得，定义如下：</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Class&lt;?&gt; forName(String className)  </span><br><span class="line">						<span class="keyword">throws</span> ClassNotFoundException</span><br></pre></td></tr></table></figure>
+<p> 使用时如:</p>
+ <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class c = Class.forname(<span class="string">"java.lang.String"</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>程序开发过程中如果需要class，一般使用第二种方法，框架设计时常用第三种。</p>
+<h3 id="class类实例化对象"><a href="#class类实例化对象" class="headerlink" title="class类实例化对象"></a>class类实例化对象</h3><p>Class类如果使用forName()方法之后，就可以调用Class类中newInstance()无参构造函数方法进行操作，该方法定义如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> T <span class="title">newInstance</span><span class="params">()</span></span></span><br><span class="line"><span class="function">        <span class="keyword">throws</span> InstantiationException, IllegalAccessException</span></span><br></pre></td></tr></table></figure>
+<p>该方法表示创建此Class对象所表示的类的一个新实例。</p>
+<p>参考原博主给的一个Student示例：<br><img src="/2018/03/12/Java-Reflection/1520841800260.png" alt="Result"></p>
+<p>调用类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> io.github.fabricezhang.reflect;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaReflectDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InstantiationException, IllegalAccessException </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Class&lt;?&gt; c = Class.forName(<span class="string">"io.github.fabricezhang.classdemo.Student"</span>);</span><br><span class="line">            Object o = c.newInstance();</span><br><span class="line">            System.out.println(o);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            <span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Student类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> io.github.fabricezhang.classdemo;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;  </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">        System.out.println(<span class="string">"Student类的构造方法"</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Override</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Student类的toString方法"</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">控制台显示结果：</span><br><span class="line">``` </span><br><span class="line">Student类的构造方法</span><br><span class="line">Student类的toString方法</span><br></pre></td></tr></table></figure></p>
+<p>通过上面的实例可以看出，调用newInstace()方法时，程序会默认调用Student类的无参构造方法，并且获取到了Student类的实例化对象，可以调用Student类里面的方法属性。</p>
+<h2 id="利用反射操作构造方法"><a href="#利用反射操作构造方法" class="headerlink" title="利用反射操作构造方法"></a>利用反射操作构造方法</h2><p>在Class类中有两个方法可以获取类中的构造方法，分别是：<br>获取类中所有的构造方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Constructor&lt;?&gt;[] getConstructors() <span class="keyword">throws</span> SecurityException &#123;</span><br><span class="line">     checkMemberAccess(Member.PUBLIC, Reflection.getCallerClass(), <span class="keyword">true</span>);</span><br><span class="line">     <span class="keyword">return</span> copyConstructors(privateGetDeclaredConstructors(<span class="keyword">true</span>));</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<p>获取类中指定的构造方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> Constructor&lt;T&gt; <span class="title">getConstructor</span><span class="params">(Class&lt;?&gt;... parameterTypes)</span></span></span><br><span class="line"><span class="function">     <span class="keyword">throws</span> NoSuchMethodException, SecurityException </span>&#123;</span><br><span class="line">     checkMemberAccess(Member.PUBLIC, Reflection.getCallerClass(), <span class="keyword">true</span>);</span><br><span class="line">     <span class="keyword">return</span> getConstructor0(parameterTypes, Member.PUBLIC);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure></p>
+<p>具体细节可以参见<strong><em>Class.class</em></strong><br>这两个方法返回的都是反射包（<strong>java.lang.reflect.* </strong>）中的<strong>Constructor</strong>类，该类提供了单个构造方法的信息以及对它的访问权限。</p>
+<p>举个例子：<br>改进的Student类<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> io.github.fabricezhang.classdemo;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;  </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">        System.out.println(<span class="string">"Student类的构造方法"</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        System.out.println(s); </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Student类的构造方法"</span> + i);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Override</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Student类的toString方法"</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> io.github.fabricezhang.reflect;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Constructor;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaReflectDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InstantiationException, IllegalAccessException </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            Class&lt;?&gt; c = Class.forName(<span class="string">"io.github.fabricezhang.classdemo.Student"</span>);</span><br><span class="line">            Object o = c.newInstance();</span><br><span class="line">            </span><br><span class="line">            <span class="comment">//获取所有构造函数  </span></span><br><span class="line">            Constructor&lt;?&gt;[] cons = c.getConstructors();  </span><br><span class="line">            <span class="comment">//循环打印  </span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; cons.length; i++) &#123;  </span><br><span class="line">                System.out.println(cons[i]);  </span><br><span class="line">            &#125;  </span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">            <span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果如图：<br><img src="/2018/03/12/Java-Reflection/1520843015901.png" alt="Result"><br>获取所有构造方法看上去并不难，如果想要进行指定构造方法的调用，则必须关注Constructor类，使用newInstance()方法进行实例。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/07/Singleton/" rel="next" title="Singleton">
+                <i class="fa fa-chevron-left"></i> Singleton
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Jun ZHANG</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-反射机制"><span class="nav-number">1.</span> <span class="nav-text">Java 反射机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#反射机制"><span class="nav-number">1.1.</span> <span class="nav-text">反射机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类的概念"><span class="nav-number">1.2.</span> <span class="nav-text">类的概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#获取需要使用的类"><span class="nav-number">1.2.1.</span> <span class="nav-text">获取需要使用的类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#class类实例化对象"><span class="nav-number">1.2.2.</span> <span class="nav-text">class类实例化对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用反射操作构造方法"><span class="nav-number">1.3.</span> <span class="nav-text">利用反射操作构造方法</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jun ZHANG</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
