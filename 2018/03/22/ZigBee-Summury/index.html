@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="ZigBee," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="ZigBee概述ZigBee名称由来蜜蜂在发现花丛后会通过一种特殊的肢体语言来告知同伴新发现的食物源位置等信息，这种肢体语言就是ZigZag舞蹈，是蜜蜂之间一种简单传达信息的方式。借此意义ZigBee作为新一代无线通讯技术的命名。 ZigBee的特点下面列表简单对ZigBee、Wifi、BLE（低功耗蓝牙）进行了对比。    协议 频段 功耗 支持网络 速率 传输距离 延时（睡眠到工作）">
+<meta name="keywords" content="ZigBee">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ZigBee总结">
+<meta property="og:url" content="http://yoursite.com/2018/03/22/ZigBee-Summury/index.html">
+<meta property="og:site_name" content="Bloooog">
+<meta property="og:description" content="ZigBee概述ZigBee名称由来蜜蜂在发现花丛后会通过一种特殊的肢体语言来告知同伴新发现的食物源位置等信息，这种肢体语言就是ZigZag舞蹈，是蜜蜂之间一种简单传达信息的方式。借此意义ZigBee作为新一代无线通讯技术的命名。 ZigBee的特点下面列表简单对ZigBee、Wifi、BLE（低功耗蓝牙）进行了对比。    协议 频段 功耗 支持网络 速率 传输距离 延时（睡眠到工作）">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2018/03/22/ZigBee-Summury/1521708527096.png">
+<meta property="og:image" content="http://yoursite.com/2018/03/22/ZigBee-Summury/1521708714926.png">
+<meta property="og:image" content="http://yoursite.com/2018/03/22/ZigBee-Summury/1521708990134.png">
+<meta property="og:updated_time" content="2018-03-22T09:07:24.305Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ZigBee总结">
+<meta name="twitter:description" content="ZigBee概述ZigBee名称由来蜜蜂在发现花丛后会通过一种特殊的肢体语言来告知同伴新发现的食物源位置等信息，这种肢体语言就是ZigZag舞蹈，是蜜蜂之间一种简单传达信息的方式。借此意义ZigBee作为新一代无线通讯技术的命名。 ZigBee的特点下面列表简单对ZigBee、Wifi、BLE（低功耗蓝牙）进行了对比。    协议 频段 功耗 支持网络 速率 传输距离 延时（睡眠到工作）">
+<meta name="twitter:image" content="http://yoursite.com/2018/03/22/ZigBee-Summury/1521708527096.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/22/ZigBee-Summury/"/>
+
+
+
+
+
+  <title>ZigBee总结 | Bloooog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Bloooog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Keep Calm and Write it Down</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/22/ZigBee-Summury/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jun ZHANG">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Bloooog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ZigBee总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-22T17:20:01+08:00">
+                2018-03-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="ZigBee概述"><a href="#ZigBee概述" class="headerlink" title="ZigBee概述"></a>ZigBee概述</h1><h2 id="ZigBee名称由来"><a href="#ZigBee名称由来" class="headerlink" title="ZigBee名称由来"></a>ZigBee名称由来</h2><p>蜜蜂在发现花丛后会通过一种特殊的肢体语言来告知同伴新发现的食物源位置等信息，这种肢体语言就是ZigZag舞蹈，是蜜蜂之间一种简单传达信息的方式。借此意义ZigBee作为新一代无线通讯技术的命名。</p>
+<h2 id="ZigBee的特点"><a href="#ZigBee的特点" class="headerlink" title="ZigBee的特点"></a>ZigBee的特点</h2><p>下面列表简单对ZigBee、Wifi、BLE（低功耗蓝牙）进行了对比。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">协议</th>
+<th style="text-align:left">频段</th>
+<th style="text-align:left">功耗</th>
+<th style="text-align:left">支持网络</th>
+<th style="text-align:left">速率</th>
+<th style="text-align:left">传输距离</th>
+<th style="text-align:left">延时（睡眠到工作）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">ZigBee</td>
+<td style="text-align:left">2.4GHz<br>868MHz<br>915 MHz</td>
+<td style="text-align:left">低</td>
+<td style="text-align:left">星型<br>树型<br>网状</td>
+<td style="text-align:left">250kbps(2.4GHz)</td>
+<td style="text-align:left">30m - 100m</td>
+<td style="text-align:left">30ms</td>
+</tr>
+<tr>
+<td style="text-align:left">Wifi</td>
+<td style="text-align:left">2.4GHz</td>
+<td style="text-align:left">高</td>
+<td style="text-align:left">星型<br>网状（新增）</td>
+<td style="text-align:left">11Mbps-108Mbps(根据协议)</td>
+<td style="text-align:left">100m - 300m</td>
+<td style="text-align:left">3s</td>
+</tr>
+<tr>
+<td style="text-align:left">BLE</td>
+<td style="text-align:left">2.4GHz</td>
+<td style="text-align:left">低</td>
+<td style="text-align:left">星型<br>网状（新增）</td>
+<td style="text-align:left">1Mbps</td>
+<td style="text-align:left">10m - 30m</td>
+<td style="text-align:left">3s - 10s</td>
+</tr>
+</tbody>
+</table>
+<p>总结下来的话，ZigBee 主要有几个特点：</p>
+<ul>
+<li>自组网</li>
+<li>低功耗</li>
+<li>短时延</li>
+<li>低成本 ：协议无专利费，协议简化对硬件资源要求低。</li>
+<li>低速率 ：20～250kbps</li>
+<li>近距离 ：通过增加发射功率的方式也可以增加到1-3km</li>
+<li>高容量 ：支持多种拓扑结构，一个主节点最多管理254个子节点，最多组成65000个节点的大网络 （理论数据），实际中大概可以支持200多设备网络。</li>
+<li>高安全 ： 基于协议，AES-128。</li>
+<li>免执照频段 ：使用工业科学医疗(ISM)频段，915MHz(美国), 868MHz(欧洲), 2. 4GHz(全球)，由于此三个频带物理层并不相同，其各自信道带宽也不同，分别为0.6MHz, 2MHz和5MHz。分别有1个, 10个和16个信道。</li>
+</ul>
+<h2 id="ZigBee设备分类"><a href="#ZigBee设备分类" class="headerlink" title="ZigBee设备分类"></a>ZigBee设备分类</h2><p>根据IEEE 802.15.4 定义，设备被分为两类：</p>
+<ul>
+<li>全功能设备，full-function devices (FFDs) </li>
+<li>半功能设备，reduced-function devices (RFDs).</li>
+</ul>
+<p>在IEEE 802.15.4网络中，一个FFD可以扮演三个角色－协调器（Coordinator）、PAN协调器（PAN coordinator）和设备（Device)，其中协调器是一个全功能设备（FFD），它可以在网络中传递信息（做传话筒）。如果一个协调器在一个PAN（personal area network，个人区域网络）网络中做主控制器（即网关），那我们把它叫做PAN协调器。除此之外，都是设备。</p>
+<p>ZigBee协议中的定义与IEEE 802.15.4的定义相似，ZigBee中的“Coordinator”是IEEE 802.15.4中的“PAN Coordinator”；ZigBee中的“Router”就是IEEE 802.15.4中的“Coordinator”，而“End Device”就是指IEEE 802.15.4中的“Device”。</p>
+<p>在ZigBee网络中存在三种设备类型：</p>
+<ul>
+<li>Coordinator(协调器)  – FFD </li>
+<li>Router(路由器)   – FFD</li>
+<li>End-Device(终端设备)  – RFD</li>
+</ul>
+<p>ZigBee网络由一个Coordinator以及多个Router和多个End_Device组成。</p>
+<h2 id="ZigBee网络拓扑结构"><a href="#ZigBee网络拓扑结构" class="headerlink" title="ZigBee网络拓扑结构"></a>ZigBee网络拓扑结构</h2><h3 id="星型网络"><a href="#星型网络" class="headerlink" title="星型网络"></a>星型网络</h3><p>星形拓扑是最简单的一种拓扑形式，他包含一个Coordinator（协调者） 节点和一系列的End Device（终端）节点。每一个End Device 节点只能和 Coordinator 节点进行通讯。如果需要在两个 End Device 节点之间进行通讯必须通过Coordinator节点进行信息的转发。<br><img src="/2018/03/22/ZigBee-Summury/1521708527096.png" alt="星型网络|center"><br>这种拓扑形式的缺点是节点之间的数据路由只有唯一的一个路径。Coordinator（协调者）有可能成为整个网络的瓶颈。实现星形网络拓扑不需要使用 ZigBee 的网络层协议，因为本身IEEE 802.15.4的协议层就已经实现了星形拓扑形式，但是这需要开发者在应用层作更多的工作，包括自己处理信息的转发。</p>
+<h3 id="树型网络"><a href="#树型网络" class="headerlink" title="树型网络"></a>树型网络</h3><p>树形拓扑包括一个Coordinator（协调者）以及一系列的 Router（路由器） 和 End Device（终端）节点。Coordinator 连接一系列的 Router 和 End Device， 他的子节点的 Router也可以连接一系列的 Router 和End Device. 这样可以重复多个层级。树形拓扑的结构如下图所示：<br><img src="/2018/03/22/ZigBee-Summury/1521708714926.png" alt="树型网络|center"><br>需要注意的是：</p>
+<ul>
+<li>Coordinator 和 Router 节点可以包含自己的子节点。</li>
+<li>End Device 不能有自己的子节点。</li>
+<li>有同一个父节点的节点之间称为兄弟节点</li>
+<li>有同一个祖父节点的节点之间称为堂兄弟节点</li>
+</ul>
+<p>树形拓扑中的通讯规则：</p>
+<ul>
+<li>每一个节点都只能和他的父节点和子节点之间通讯。</li>
+<li>如果需要从一个节点向另一个节点发送数据，那么信息将沿着树的路径向上传递到最近的祖先节点然后再向下传递到目标节点。</li>
+<li>这种拓扑方式的缺点就是信息只有唯一的路由通道。另外信息的路由是由协议栈层处理的，整个的路由过程对于应用层是完全透明的。</li>
+</ul>
+<h3 id="Mesh拓扑（网状拓扑）"><a href="#Mesh拓扑（网状拓扑）" class="headerlink" title="Mesh拓扑（网状拓扑）"></a>Mesh拓扑（网状拓扑）</h3><p>网状拓扑结构包含一个Coordinator和一系列的Router 和End Device。这种网络拓扑形式和树形拓扑相同，可以参考上面所提到的树形网络拓扑。但是，网状网络拓扑具有更加灵活的信息路由规则，在可能的情况下，路由节点之间可以直接的通讯。这种路由机制使得信息的通讯变得更有效率，而且意味这一旦一个路由路径出现了问题，信息可以自动的沿着其他的路由路径进行传输。 网状拓扑的示意图如下所示：<br><img src="/2018/03/22/ZigBee-Summury/1521708990134.png" alt="Mesh拓扑|cet"><br>通常在支持网状网络的实现上，网络层会提供相应的路由探索功能，这一特性使得网络层可以找到信息传输的最优化的路径。 需要注意的是，以上所提到的特性都是由网络层来实现，应用层不需要进行任何的参与。<br>MESH 网状网络拓扑结构的网络具有强大的功能，网络可以通过“多级跳”的方式来通信；该拓扑结构还可以组成极为复杂的网络；网络还具备自组织、自愈功能；</p>
+<h1 id="Raven-H-具体实现"><a href="#Raven-H-具体实现" class="headerlink" title="Raven-H 具体实现"></a>Raven-H 具体实现</h1>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ZigBee/" rel="tag"># ZigBee</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/16/Mac上Shadowsocks的配置/" rel="next" title="Mac上Shadowsocks的配置">
+                <i class="fa fa-chevron-left"></i> Mac上Shadowsocks的配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Jun ZHANG</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ZigBee概述"><span class="nav-number">1.</span> <span class="nav-text">ZigBee概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ZigBee名称由来"><span class="nav-number">1.1.</span> <span class="nav-text">ZigBee名称由来</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ZigBee的特点"><span class="nav-number">1.2.</span> <span class="nav-text">ZigBee的特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ZigBee设备分类"><span class="nav-number">1.3.</span> <span class="nav-text">ZigBee设备分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ZigBee网络拓扑结构"><span class="nav-number">1.4.</span> <span class="nav-text">ZigBee网络拓扑结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#星型网络"><span class="nav-number">1.4.1.</span> <span class="nav-text">星型网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#树型网络"><span class="nav-number">1.4.2.</span> <span class="nav-text">树型网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mesh拓扑（网状拓扑）"><span class="nav-number">1.4.3.</span> <span class="nav-text">Mesh拓扑（网状拓扑）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Raven-H-具体实现"><span class="nav-number">2.</span> <span class="nav-text">Raven-H 具体实现</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jun ZHANG</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
